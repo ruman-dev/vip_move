@@ -1,11 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vid_move/core/network_caller/network_caller.dart';
 import 'package:vid_move/core/utils/const.dart';
 import 'package:vid_move/core/utils/notification.dart';
-import 'package:vid_move/feature/all_service/models/all_service_model.dart';
+import '../../all_service/models/all_service_model.dart';
+
 
 class SearchScreenController extends GetxController {
   var selectedCategoryIndex = 0.obs;
@@ -14,6 +15,26 @@ class SearchScreenController extends GetxController {
   var ratingList = ['★  All', '★  5', '★  4', '★  3', '★  2', '★  1'].obs;
   var list = [].obs;
   var recentSearch = [].obs;
+
+
+  final Rx<TextEditingController> searchTEController =
+      TextEditingController().obs;
+
+  RxList<dynamic> searchFilterList = <dynamic>[].obs;
+
+  // void addSearchList({required String searchText}) {
+  //   if (list.contains(searchText)) {
+  //     searchFilterList.add(searchText);
+  //   } else {
+  //     searchFilterList.clear();
+  //   }
+  // }
+
+  void addSearchList({required String searchText}) {
+    final filtered = list.where((item) =>
+        item.toLowerCase().contains(searchText.toLowerCase())).toList();
+    searchFilterList.value = filtered;
+  }
 
   Rx<AllServicesModel> serviceModel = AllServicesModel().obs;
 
@@ -33,7 +54,7 @@ class SearchScreenController extends GetxController {
         }
       }
       list.value = uniqueNames.toList();
-      print('List Values: $list');
+      print('List===================================== Values: $list');
     } else {
       list.clear();
     }
@@ -50,6 +71,9 @@ class SearchScreenController extends GetxController {
         final searchData = response.responseData['searches'][i]['searchTerm'];
         recentSearch.add(searchData);
       }
+
+
+
       print('Recent Search: $recentSearch');
     } else {
       recentSearch.clear();

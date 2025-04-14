@@ -1,3 +1,59 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:get/get.dart';
+// import 'package:vid_move/core/global_widget/custom_appbar.dart';
+// import 'package:vid_move/feature/search/controller/search_controller.dart';
+//
+// class SearchScreen extends StatelessWidget {
+//   SearchScreen({super.key});
+//
+//   final SearchScreenController searchScreenController = Get.put(
+//     SearchScreenController(),
+//   );
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: CustomAppbar(title: 'Search'),
+//       body: Padding(
+//         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+//         child: Column(
+//           children: [
+//             TextFormField(
+//               controller: searchScreenController.searchTEController.value,
+//               decoration: InputDecoration(hintText: 'Cleaning'),
+//               onChanged: (value) {
+//                 searchScreenController.addSearchList(searchText: value);
+//               },
+//             ),
+//
+//             Expanded(
+//               child: Obx(
+//                 () => ListView.builder(
+//                   itemCount: searchScreenController.searchFilterList.length,
+//                   itemBuilder: (context, index) {
+//                     final searchItem = searchScreenController.searchFilterList[index];
+//                     return Text(
+//                       searchItem,
+//                       style: TextStyle(
+//                         color: Colors.black,
+//                         fontSize: 18.sp,
+//                         fontWeight: FontWeight.w500,
+//                       ),
+//                     );
+//                   },
+//                 ),
+//               ),
+//             ),
+//
+//
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -39,7 +95,11 @@ class SearchScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(AssetPath.searchIcon, width: 20.w, color: AppColors.lightGrey),
+                  Image.asset(
+                    AssetPath.searchIcon,
+                    width: 20.w,
+                    color: AppColors.lightGrey,
+                  ),
                   SizedBox(width: 10.h),
                   Expanded(
                     child: TextFormField(
@@ -47,23 +107,49 @@ class SearchScreen extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       controller: controller.serviceSearchController,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.sizeOf(context).width * 0.013),
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.sizeOf(context).width * 0.013,
+                        ),
                         hintText: 'Cleaning',
                         border: InputBorder.none,
                         filled: true,
                         fillColor: Colors.white,
                       ),
+                      // onChanged: (value) {
+                      //   controller.addSearchList(searchText: value);
+                      //
+                      //   if (controller.serviceSearchController.text
+                      //       .trim()
+                      //       .isEmpty) {
+                      //     controller.list.clear();
+                      //     controller.fetchRecentSearches();
+                      //   } else {
+                      //     controller.fetchResult(
+                      //       controller.serviceSearchController.text.trim(),
+                      //     );
+                      //   }
+                      // },
                       onChanged: (value) {
-                        if (controller.serviceSearchController.text.trim().isEmpty) {
+                        controller.addSearchList(searchText: value);
+
+                        if (controller.serviceSearchController.text
+                            .trim()
+                            .isEmpty) {
                           controller.list.clear();
                           controller.fetchRecentSearches();
                         } else {
-                          controller.fetchResult(controller.serviceSearchController.text.trim());
+                          controller.fetchResult(
+                            controller.serviceSearchController.text.trim(),
+                          );
                         }
                       },
                     ),
                   ),
-                  WxDivider(direction: Axis.vertical, thickness: 2, color: Color(0xFFE9EBED)),
+                  WxDivider(
+                    direction: Axis.vertical,
+                    thickness: 2,
+                    color: Color(0xFFE9EBED),
+                  ),
                   SizedBox(width: 5.w),
                   GestureDetector(
                     onTap: () {
@@ -89,16 +175,31 @@ class SearchScreen extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 10.h),
-                                  CustomTextPoppins(text: 'Filter', fontSize: 24.sp, fontWeight: FontWeight.w600),
+                                  CustomTextPoppins(
+                                    text: 'Filter',
+                                    fontSize: 24.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                   SizedBox(height: 15.h),
-                                  Divider(color: Color(0xFFEEEEEE), thickness: 1.w, endIndent: 16, indent: 16),
+                                  Divider(
+                                    color: Color(0xFFEEEEEE),
+                                    thickness: 1.w,
+                                    endIndent: 16,
+                                    indent: 16,
+                                  ),
                                   SizedBox(height: 10.h),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                        child: CustomTextPoppins(text: 'Category', fontSize: 20.sp, fontWeight: FontWeight.w500),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w,
+                                        ),
+                                        child: CustomTextPoppins(
+                                          text: 'Category',
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -106,44 +207,86 @@ class SearchScreen extends StatelessWidget {
                                   SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Padding(
-                                      padding: EdgeInsets.only(bottom: 10.h, right: 16.w, left: 7.h, top: 10.h),
+                                      padding: EdgeInsets.only(
+                                        bottom: 10.h,
+                                        right: 16.w,
+                                        left: 7.h,
+                                        top: 10.h,
+                                      ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
                                         children: [
-                                          ...controller.categoryList.map((element) {
+                                          ...controller.categoryList.map((
+                                              element,
+                                              ) {
                                             return Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 5.w,
+                                              ),
                                               child: Wrap(
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () {
-                                                      controller.selectedCategoryIndex.value = controller.categoryList.indexOf(
-                                                        element,
-                                                      );
+                                                      controller
+                                                          .selectedCategoryIndex
+                                                          .value = controller
+                                                          .categoryList
+                                                          .indexOf(element);
                                                     },
                                                     child: Obx(
-                                                      () => Container(
-                                                        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
+                                                          () => Container(
+                                                        padding:
+                                                        EdgeInsets.symmetric(
+                                                          horizontal: 14.w,
+                                                          vertical: 6.h,
+                                                        ),
                                                         decoration: BoxDecoration(
                                                           color:
-                                                              controller.selectedCategoryIndex.value ==
-                                                                      controller.categoryList.indexOf(element)
-                                                                  ? AppColors.primary
-                                                                  : Colors.white,
-                                                          border: Border.all(width: 1.5, color: Color(0xFFE3E3E9)),
-                                                          borderRadius: BorderRadius.circular(30.r),
+                                                          controller
+                                                              .selectedCategoryIndex
+                                                              .value ==
+                                                              controller
+                                                                  .categoryList
+                                                                  .indexOf(
+                                                                element,
+                                                              )
+                                                              ? AppColors
+                                                              .primary
+                                                              : Colors
+                                                              .white,
+                                                          border: Border.all(
+                                                            width: 1.5,
+                                                            color: Color(
+                                                              0xFFE3E3E9,
+                                                            ),
+                                                          ),
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                            30.r,
+                                                          ),
                                                         ),
                                                         child: Text(
                                                           element.toString(),
-                                                          textAlign: TextAlign.center,
+                                                          textAlign:
+                                                          TextAlign.center,
                                                           style: GoogleFonts.poppins(
                                                             fontSize: 16.sp,
-                                                            fontWeight: FontWeight.w600,
+                                                            fontWeight:
+                                                            FontWeight.w600,
                                                             color:
-                                                                controller.selectedCategoryIndex.value ==
-                                                                        controller.categoryList.indexOf(element)
-                                                                    ? Colors.white
-                                                                    : AppColors.lightGrey,
+                                                            controller
+                                                                .selectedCategoryIndex
+                                                                .value ==
+                                                                controller
+                                                                    .categoryList
+                                                                    .indexOf(
+                                                                  element,
+                                                                )
+                                                                ? Colors
+                                                                .white
+                                                                : AppColors
+                                                                .lightGrey,
                                                           ),
                                                         ),
                                                       ),
@@ -162,14 +305,20 @@ class SearchScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                        child: CustomTextPoppins(text: 'Price', fontSize: 20.sp, fontWeight: FontWeight.w500),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w,
+                                        ),
+                                        child: CustomTextPoppins(
+                                          text: 'Price',
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ],
                                   ),
 
                                   Obx(
-                                    () => SfRangeSlider(
+                                        () => SfRangeSlider(
                                       min: 0.0,
                                       max: 1000.0,
                                       values: _values.value,
@@ -179,7 +328,10 @@ class SearchScreen extends StatelessWidget {
                                       enableTooltip: true,
                                       activeColor: AppColors.primary,
                                       minorTicksPerInterval: 1,
-                                      tooltipTextFormatterCallback: (dynamic value, String formattedText) {
+                                      tooltipTextFormatterCallback: (
+                                          dynamic value,
+                                          String formattedText,
+                                          ) {
                                         return '\$${value.toInt()}';
                                       },
                                       onChanged: (SfRangeValues newValues) {
@@ -192,8 +344,14 @@ class SearchScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                        child: CustomTextPoppins(text: 'Rating', fontSize: 20.sp, fontWeight: FontWeight.w500),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w,
+                                        ),
+                                        child: CustomTextPoppins(
+                                          text: 'Rating',
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -201,44 +359,87 @@ class SearchScreen extends StatelessWidget {
                                   SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Padding(
-                                      padding: EdgeInsets.only(bottom: 10.h, right: 16.w, left: 7.h, top: 10.h),
+                                      padding: EdgeInsets.only(
+                                        bottom: 10.h,
+                                        right: 16.w,
+                                        left: 7.h,
+                                        top: 10.h,
+                                      ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center, // Center align items
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .center, // Center align items
                                         children: [
-                                          ...controller.ratingList.map((element) {
+                                          ...controller.ratingList.map((
+                                              element,
+                                              ) {
                                             return Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 5.w,
+                                              ),
                                               child: Wrap(
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () {
-                                                      controller.selectedRatingIndex.value = controller.ratingList.indexOf(
-                                                        element,
-                                                      );
+                                                      controller
+                                                          .selectedRatingIndex
+                                                          .value = controller
+                                                          .ratingList
+                                                          .indexOf(element);
                                                     },
                                                     child: Obx(
-                                                      () => Container(
-                                                        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
+                                                          () => Container(
+                                                        padding:
+                                                        EdgeInsets.symmetric(
+                                                          horizontal: 14.w,
+                                                          vertical: 6.h,
+                                                        ),
                                                         decoration: BoxDecoration(
                                                           color:
-                                                              controller.selectedRatingIndex.value ==
-                                                                      controller.ratingList.indexOf(element)
-                                                                  ? AppColors.primary
-                                                                  : Colors.white,
-                                                          border: Border.all(width: 1.5, color: Color(0xFFE3E3E9)),
-                                                          borderRadius: BorderRadius.circular(30.r),
+                                                          controller
+                                                              .selectedRatingIndex
+                                                              .value ==
+                                                              controller
+                                                                  .ratingList
+                                                                  .indexOf(
+                                                                element,
+                                                              )
+                                                              ? AppColors
+                                                              .primary
+                                                              : Colors
+                                                              .white,
+                                                          border: Border.all(
+                                                            width: 1.5,
+                                                            color: Color(
+                                                              0xFFE3E3E9,
+                                                            ),
+                                                          ),
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                            30.r,
+                                                          ),
                                                         ),
                                                         child: Text(
                                                           element.toString(),
-                                                          textAlign: TextAlign.center,
+                                                          textAlign:
+                                                          TextAlign.center,
                                                           style: GoogleFonts.poppins(
                                                             fontSize: 16.sp,
-                                                            fontWeight: FontWeight.w600,
+                                                            fontWeight:
+                                                            FontWeight.w600,
                                                             color:
-                                                                controller.selectedRatingIndex.value ==
-                                                                        controller.ratingList.indexOf(element)
-                                                                    ? Colors.white
-                                                                    : AppColors.lightGrey,
+                                                            controller
+                                                                .selectedRatingIndex
+                                                                .value ==
+                                                                controller
+                                                                    .ratingList
+                                                                    .indexOf(
+                                                                  element,
+                                                                )
+                                                                ? Colors
+                                                                .white
+                                                                : AppColors
+                                                                .lightGrey,
                                                           ),
                                                         ),
                                                       ),
@@ -254,7 +455,9 @@ class SearchScreen extends StatelessWidget {
                                   ),
                                   SizedBox(height: 20.h),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w,
+                                    ),
                                     child: Row(
                                       children: [
                                         Expanded(
@@ -266,7 +469,12 @@ class SearchScreen extends StatelessWidget {
                                           ),
                                         ),
                                         SizedBox(width: 20.w),
-                                        Expanded(child: CustomButton(btnText: 'Filter', onPressed: () {})),
+                                        Expanded(
+                                          child: CustomButton(
+                                            btnText: 'Filter',
+                                            onPressed: () {},
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -278,7 +486,11 @@ class SearchScreen extends StatelessWidget {
                         },
                       );
                     },
-                    child: Image.asset(AssetPath.filterIcon, width: 20.w, height: 20.h),
+                    child: Image.asset(
+                      AssetPath.filterIcon,
+                      width: 20.w,
+                      height: 20.h,
+                    ),
                   ),
                 ],
               ),
@@ -287,7 +499,12 @@ class SearchScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomTextPoppins(text: 'Recent', fontSize: 20.sp, fontWeight: FontWeight.w600, color: Color(0xFF212121)),
+                CustomTextPoppins(
+                  text: 'Recent',
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF212121),
+                ),
                 GestureDetector(
                   onTap: () {
                     controller.deleteRecentSearches();
@@ -303,44 +520,37 @@ class SearchScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 15.h),
+
             Expanded(
               child: Obx(
-                () =>
-                    controller.serviceSearchController.text.trim().isEmpty
-                        ? ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          itemCount: controller.recentSearch.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: CustomTextPoppins(
-                                text: controller.recentSearch[index],
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.lightGrey,
-                              ),
-                              trailing: Image.asset(AssetPath.removeIcon, width: 28.w),
-                            );
-                          },
-                        )
-                        : ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          itemCount: controller.list.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: CustomTextPoppins(
-                                text: controller.list[index],
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.lightGrey,
-                              ),
-                              trailing: Image.asset(AssetPath.removeIcon, width: 28.w),
-                            );
-                          },
+                    () => ListView.builder(
+                  itemCount: controller.searchFilterList.length,
+
+                  itemBuilder: (context, index) {
+                    final searchItem = controller.searchFilterList[index];
+                    return Container(
+                      height: 56.w,
+                      width: double.maxFinite.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8).w,
+                      ),
+                      alignment: Alignment.centerLeft,
+                      // padding: EdgeInsets.symmetric(horizontal: 16).w,
+                      child: Text(
+                        searchItem,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w500,
                         ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
+
+
           ],
         ),
       ),

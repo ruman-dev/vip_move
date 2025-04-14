@@ -20,4 +20,14 @@ class Const {
   static const String DEL_ALL_SEARCH_URL = '$BASE_URL/service/search/deleteAll';
 
   static const String GOOGLE_API_KEY = 'AIzaSyBsPxSFf2or6oZnbq7urgrxlakTiVqTmjQ';
+
+
+
+  /////////////// SEARCH /////////////////
+  static String searchServiceApiEndpoint({required String searchText}) => '$BASE_URL/service/allServices?search=$searchText';
+  static String searchApiEndpoint = '$BASE_URL/service/searches';
+  /////////////// SEARCH /////////////////
+
+
+
 }

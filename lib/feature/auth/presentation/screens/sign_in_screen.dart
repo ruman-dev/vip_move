@@ -55,7 +55,7 @@ class SignInScreen extends StatelessWidget {
                                 controller: _controller.passwordController,
                                 hintText: 'Enter your password',
                                 isObsecure: _controller.isShowPassIcon.value,
-                                validator: (value) => Validation.validatePassword(value),
+                             //   validator: (value) => Validation.validatePassword(value),
                                 prefixImage: AssetPath.lockIcon,
                                 suffixImage: _controller.isShowPassIcon.value ? AssetPath.hideIcon : AssetPath.showIcon,
 

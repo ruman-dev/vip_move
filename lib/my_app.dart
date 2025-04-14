@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(scaffoldBackgroundColor: Color(0xFFFFFFFF), useMaterial3: true),
           getPages: Routes.route,
+          initialRoute: Routes.splashScreen,
           transitionDuration: const Duration(milliseconds: 200),
           navigatorKey: Get.key,
-          initialRoute: Routes.splashScreen,
         );
       },
     );
